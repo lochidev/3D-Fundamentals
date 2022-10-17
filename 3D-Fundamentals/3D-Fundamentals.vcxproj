@@ -141,11 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3D-Fundamentals.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3D-Fundamentals.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="NDCTransformer.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
