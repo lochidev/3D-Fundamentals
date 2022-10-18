@@ -3,6 +3,7 @@
 #include "Vec2.h"
 #include "Vec3.h"
 #include "NDCTransformer.h"
+#include "Triangle.h"
 class Game
 {
 public:
@@ -42,9 +43,18 @@ public:
 	void Update() {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 		//SDL_RenderClear(renderer);
-		Vec3<float> v(0.25f, 0.25f, 0.0f);
-		transformer.TransformNDC(v);
-		SDL_RenderDrawPoint(renderer, int(v.x), int(v.y));
+		Triangle t(0.5f);
+		auto lines = t.GetLines();
+		for (Vec3<float>& v : lines.vertices) {
+			transformer.TransformNDC(v);
+		}
+		for (auto i = lines.indexes.cbegin(),
+			end = lines.indexes.cend();
+			i != end; std::advance(i, 2)) {
+			Vec3<float>& v1 = lines.vertices[*i];
+			Vec3<float>& v2 = lines.vertices[*std::next(i)];
+			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y) );
+		}
 	}
 	void Render() {
 		SDL_RenderPresent(renderer);
