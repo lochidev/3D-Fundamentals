@@ -1,8 +1,6 @@
 #include "Game.h"
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
 int main(int argc, char* argv[]) {
-	Game game((const char*)"Game", WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	Game game((const char*)"Game", 1280, 720, false);
 	while (game.isRunning) {
 		game.HandleEvents();
 		game.Update();
