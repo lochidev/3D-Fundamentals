@@ -11,4 +11,3 @@ int main(int argc, char* argv[]) {
 	game.Clean();
 	return 0;
 }
-test
