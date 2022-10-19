@@ -4,6 +4,7 @@
 #include "Vec3.h"
 #include "NDCTransformer.h"
 #include "Triangle.h"
+#include "Mat2.h"
 class Game
 {
 public:
@@ -47,6 +48,7 @@ public:
 		auto lines = t.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
 			transformer.TransformNDC(v);
+			Mat2<float>::Rotate(v, 30);
 		}
 		for (auto i = lines.indexes.cbegin(),
 			end = lines.indexes.cend();
@@ -55,6 +57,13 @@ public:
 			Vec3<float>& v2 = lines.vertices[*std::next(i)];
 			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y) );
 		}
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		SDL_RenderDrawPoint(renderer, int(lines.vertices[0].x), int(lines.vertices[0].y));
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+		SDL_RenderDrawPoint(renderer, int(lines.vertices[1].x), int(lines.vertices[1].y));
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+		SDL_RenderDrawPoint(renderer, int(lines.vertices[2].x), int(lines.vertices[2].y));
+
 	}
 	void Render() {
 		SDL_RenderPresent(renderer);

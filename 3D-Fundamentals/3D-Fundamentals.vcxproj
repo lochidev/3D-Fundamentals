@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="IndexedLineList.h" />
+    <ClInclude Include="Mat2.h" />
     <ClInclude Include="NDCTransformer.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vec2.h" />
