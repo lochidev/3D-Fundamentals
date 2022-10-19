@@ -43,12 +43,14 @@ public:
 		}
 	}
 	void Update() {
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-		//SDL_RenderClear(renderer);
 		Triangle t(0.5f);
+		auto ticks = SDL_GetTicks();
 		auto lines = t.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
-			Mat2<float>::Rotate(v, 2 * M_PI);
+			Mat2<float>::Rotate(v, (M_PI / 6) * ticks);
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),
@@ -58,10 +60,12 @@ public:
 			Vec3<float>& v2 = lines.vertices[*std::next(i)];
 			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y) );
 		}
+
+
 	}
 	void Render() {
 		SDL_RenderPresent(renderer);
-		SDL_Delay(10);
+		//SDL_Delay(10);
 	}
 public:
 	const int Height;
