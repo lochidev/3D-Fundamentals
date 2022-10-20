@@ -5,7 +5,7 @@
 #include "NDCTransformer.h"
 #include "Triangle.h"
 #include "Mat2.h"
-
+#include <cmath>
 class Game
 {
 public:
@@ -50,7 +50,7 @@ public:
 		auto ticks = SDL_GetTicks();
 		auto lines = t.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
-			Mat2<float>::Rotate(v, (M_PI / 6) * ticks);
+			Mat2<float>::Rotate(v, WrapAngle(((M_PI / 6) * ticks)));
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),
@@ -58,7 +58,7 @@ public:
 			i != end; std::advance(i, 2)) {
 			Vec3<float>& v1 = lines.vertices[*i];
 			Vec3<float>& v2 = lines.vertices[*std::next(i)];
-			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y) );
+			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y));
 		}
 
 
@@ -66,6 +66,11 @@ public:
 	void Render() {
 		SDL_RenderPresent(renderer);
 		//SDL_Delay(10);
+	}
+	template <typename T>
+	T WrapAngle(T angle) {
+		const T modulo = fmod(angle,((T)2 * (T)M_PI));
+		return (modulo > (T)M_PI) ? modulo - (T)2 * (T)M_PI : modulo;
 	}
 public:
 	const int Height;
