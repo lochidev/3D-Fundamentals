@@ -4,6 +4,7 @@
 #include "Vec3.h"
 #include "NDCTransformer.h"
 #include "Triangle.h"
+#include "Cube.h"
 #include "Mat2.h"
 #include <cmath>
 class Game
@@ -46,11 +47,11 @@ public:
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-		Triangle t(0.5f);
+		Cube c(0.5f);
 		auto ticks = SDL_GetTicks();
-		auto lines = t.GetLines();
+		auto lines = c.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
-			Mat2<float>::Rotate(v, WrapAngle(((M_PI / 6) * ticks)));
+			Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6))));
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),
