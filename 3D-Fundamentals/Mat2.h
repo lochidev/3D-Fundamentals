@@ -17,15 +17,15 @@ public:
 		Vec3<T> cpy(v);
 		const T cosTheta = cos(angle);
 		const T sinTheta = sin(angle);
-		v.y = cpy.x * cosTheta - cpy.y * sinTheta;
-		v.z = cpy.x * sinTheta + cpy.y * cosTheta; 
+		v.y = cpy.y * cosTheta - cpy.z * sinTheta;
+		v.z = cpy.y * sinTheta + cpy.z * cosTheta; 
 	}
 	static void RotateY(Vec3<T>& v, float angle) {
 		Vec3<T> cpy(v);
 		const T cosTheta = cos(angle);
 		const T sinTheta = sin(angle);
-		v.z = cpy.x * cosTheta - cpy.y * sinTheta;
-		v.x = cpy.x * sinTheta + cpy.y * cosTheta; 
+		v.z = cpy.z * cosTheta - cpy.x * sinTheta;
+		v.x = cpy.x * cosTheta + cpy.z * sinTheta; 
 	}
 private:
 	T x1;

@@ -51,7 +51,9 @@ public:
 		auto ticks = SDL_GetTicks();
 		auto lines = c.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
-			Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6))));
+			Mat2<float>::RotateZ(v, WrapAngle(((M_PI / 6)))); // roll first
+			Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6)))); // then pitch
+			Mat2<float>::RotateY(v, WrapAngle(((M_PI / 6)))); // then yaw
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),

@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
 			SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz.", i, current.w, current.h, current.refresh_rate);
 
 	}
-	const auto tickrate = current.refresh_rate == 0 ? 1000 / 60 : 1000 / current.refresh_rate;
+	const auto tickTime = current.refresh_rate == 0 ? 1000 / 60 : 1000 / current.refresh_rate;
 	while (game.isRunning) {
 		const auto begin = SDL_GetTicks();
 		game.HandleEvents();
@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) {
 		game.Render();
 		const auto end = SDL_GetTicks();
 		const auto diff = end - begin;
-		if (diff < tickrate) {
-			SDL_Delay(tickrate - diff);
+		if (diff < tickTime) {
+			SDL_Delay(tickTime - diff);
 		}
 	}	
 	game.Clean();
