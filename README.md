@@ -8,5 +8,8 @@ Step 1 - Triangle
 
 Step 2 - 2D rotation
 
-![triangle](https://i.imgur.com/zRtJIFE.gif)
+![2d](https://i.imgur.com/zRtJIFE.gif)
 
+Step 3 - 3D rotation
+
+![3d](https://i.imgur.com/fLf9vup.png)
