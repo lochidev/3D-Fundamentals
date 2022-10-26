@@ -7,6 +7,7 @@ public:
 	Vec2(T x, T y) : x(x), y(y)
 	{
 	}
+public:
 	T x;
 	T y;
 };

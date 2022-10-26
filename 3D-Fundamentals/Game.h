@@ -47,13 +47,14 @@ public:
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-		Cube c(0.5f);
+		Cube c(4.0f);
 		auto ticks = SDL_GetTicks();
 		auto lines = c.GetLines();
 		for (Vec3<float>& v : lines.vertices) {
-			Mat2<float>::RotateZ(v, WrapAngle(((M_PI / 6)))); // roll first
-			Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6)))); // then pitch
-			Mat2<float>::RotateY(v, WrapAngle(((M_PI / 6)))); // then yaw
+			//Mat2<float>::RotateZ(v, WrapAngle(((M_PI / 6)))); // roll first
+			//Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6)))); // then pitch
+			//Mat2<float>::RotateY(v, WrapAngle(((M_PI / 6)))); // then yaw
+			v += {0.0f, 0.0f, 6.0f};
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),
