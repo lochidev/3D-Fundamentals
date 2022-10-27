@@ -13,3 +13,7 @@ Step 2 - 2D rotation
 Step 3 - 3D rotation
 
 ![3d](https://i.imgur.com/fLf9vup.png)
+
+Step 4 - Perspective projection
+
+![Perspective projection](https://i.imgur.com/Pd84huy.png)
