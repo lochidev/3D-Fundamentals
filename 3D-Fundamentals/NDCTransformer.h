@@ -15,11 +15,6 @@ public:
 			const T inverse = 1.0f / v.z;
 			v.x = xFactor + (v.x * inverse) * xFactor;
 			v.y = yFactor - (v.y * inverse) * yFactor;
-			//if (v.x > xFactor * 2) {
-			//	v.x = v.x > (xFactor * 2) ? (xFactor * 2) : 0;
-			//	v.y = v.y > (yFactor * 2) ? (yFactor * 2) : 0;
-
-			//}
 	}
 private:
 	int xFactor;
