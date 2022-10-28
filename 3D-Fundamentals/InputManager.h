@@ -47,6 +47,9 @@ public:
 			break;
 		}
 		SDL_FlushEvents(SDL_APP_TERMINATING, SDL_LASTEVENT);
+		/*auto i = SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY);
+		SDL_Log("Value: #%d", i);*/
+
 	}
 	bool IsPressed(unsigned int t) {
 		const Uint8* keystates = SDL_GetKeyboardState(NULL);
@@ -83,20 +86,32 @@ public:
 		else {
 			switch (t) {
 			case G_LEFT_PRESSED:
-				return SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) || keystates[SDL_SCANCODE_A]
-					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_LEFT) || keystates[SDL_SCANCODE_LEFT];
-
+				return SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) 
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) 
+					|| keystates[SDL_SCANCODE_A]
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_LEFT) || keystates[SDL_SCANCODE_LEFT]
+					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTX) > 1000
+					|| -SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTX) > 1000;
+				  
 			case G_RIGHT_PRESSED:
-				return SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) || keystates[SDL_SCANCODE_D]
-					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || keystates[SDL_SCANCODE_RIGHT];
+				return SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) 
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) 
+					|| keystates[SDL_SCANCODE_D]
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || keystates[SDL_SCANCODE_RIGHT] 
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTX) > 1000
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTX) > 1000;
 
 			case G_UP_PRESSED:
 				return keystates[SDL_SCANCODE_W] || keystates[SDL_SCANCODE_UP]
-					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_UP)
+					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) > 1000
+					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) > 1000;
 
 			case G_DOWN_PRESSED:
 				return keystates[SDL_SCANCODE_S] || keystates[SDL_SCANCODE_DOWN]
-					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_DOWN)
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) > 0
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) > 0;
 
 			case G_X_PRESSED:
 				return keystates[SDL_SCANCODE_X]
