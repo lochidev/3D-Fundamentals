@@ -1,7 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_gamecontroller.h"
-//#include <bitset>
+
 #define G_LEFT_PRESSED 0
 #define G_RIGHT_PRESSED 1
 #define G_UP_PRESSED 2
@@ -10,6 +10,7 @@
 #define G_Y_PRESSED 5
 #define G_A_PRESSED 6
 #define G_B_PRESSED 7
+
 class InputManager {
 public:
 	InputManager() = default;
@@ -122,6 +123,4 @@ public:
 public:
 	bool isRunning = false;
 	SDL_GameController* gController = nullptr;
-private:
-	/*std::bitset<13> SDL_GameControllerGetButton(gController, ;*/
 };
