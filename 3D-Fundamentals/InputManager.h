@@ -110,8 +110,8 @@ public:
 			case G_DOWN_PRESSED:
 				return keystates[SDL_SCANCODE_S] || keystates[SDL_SCANCODE_DOWN]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_DOWN)
-					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) > 0
-					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) > 0;
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) > 1000
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) > 1000;
 
 			case G_X_PRESSED:
 				return keystates[SDL_SCANCODE_X]
