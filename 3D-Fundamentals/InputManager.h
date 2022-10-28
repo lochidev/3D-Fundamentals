@@ -54,28 +54,28 @@ public:
 			switch (t) {
 			case G_LEFT_PRESSED:
 				return keystates[SDL_SCANCODE_A] || keystates[SDL_SCANCODE_LEFT];
-				break;
+
 			case G_RIGHT_PRESSED:
 				return keystates[SDL_SCANCODE_D] || keystates[SDL_SCANCODE_RIGHT];
-				break;
+
 			case G_UP_PRESSED:
 				return keystates[SDL_SCANCODE_W] || keystates[SDL_SCANCODE_UP];
-				break;
+
 			case G_DOWN_PRESSED:
 				return keystates[SDL_SCANCODE_S] || keystates[SDL_SCANCODE_DOWN];
-				break;
+
 			case G_X_PRESSED:
 				return keystates[SDL_SCANCODE_X];
-				break;
+
 			case G_Y_PRESSED:
 				return keystates[SDL_SCANCODE_Z];
-				break;
+
 			case G_A_PRESSED:
 				return keystates[SDL_SCANCODE_C];
-				break;
+
 			case G_B_PRESSED:
 				return keystates[SDL_SCANCODE_B];
-				break;
+
 			default:
 				break;
 			}
@@ -85,35 +85,35 @@ public:
 			case G_LEFT_PRESSED:
 				return SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) || keystates[SDL_SCANCODE_A]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_LEFT) || keystates[SDL_SCANCODE_LEFT];
-				break;
+
 			case G_RIGHT_PRESSED:
 				return SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) || keystates[SDL_SCANCODE_D]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || keystates[SDL_SCANCODE_RIGHT];
-				break;
+
 			case G_UP_PRESSED:
 				return keystates[SDL_SCANCODE_W] || keystates[SDL_SCANCODE_UP]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_UP);
-				break;
+
 			case G_DOWN_PRESSED:
 				return keystates[SDL_SCANCODE_S] || keystates[SDL_SCANCODE_DOWN]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-				break;
+
 			case G_X_PRESSED:
 				return keystates[SDL_SCANCODE_X]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_X);
-				break;
+
 			case G_Y_PRESSED:
 				return keystates[SDL_SCANCODE_Z]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_Y);
-				break;
+
 			case G_A_PRESSED:
 				return keystates[SDL_SCANCODE_C]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_A);
-				break;
+
 			case G_B_PRESSED:
 				return keystates[SDL_SCANCODE_B]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_B);
-				break;
+
 			default:
 				break;
 			}

@@ -8,13 +8,13 @@ public:
 	{
 	}
 	void TransformNDC(Vec2<T>& v) {
-		v.x = xFactor + v.x * xFactor;
-		v.y = yFactor - v.y * yFactor;
+		v.x = (1.0f + v.x) * xFactor;
+		v.y = (1.0f - v.y) * yFactor;
 	}
 	void TransformNDC(Vec3<T>& v) {
 			const T inverse = 1.0f / v.z;
-			v.x = xFactor + (v.x * inverse) * xFactor;
-			v.y = yFactor - (v.y * inverse) * yFactor;
+			v.x = (1.0f + (v.x * inverse)) * xFactor;
+			v.y = (1.0f - (v.y * inverse)) * yFactor;
 	}
 private:
 	int xFactor;
