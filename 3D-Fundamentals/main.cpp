@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
 
 	}
 	const auto tickTime = current.refresh_rate == 0 ? 1000 / 60 : 1000 / current.refresh_rate;
-	while (game.isRunning) {
+	while (game.ip.isRunning) {
 		const auto begin = SDL_GetTicks();
-		game.HandleEvents();
+		game.ip.HandleEvents();
 		game.Update();
 		game.Render();
 		const auto end = SDL_GetTicks();
@@ -29,6 +29,5 @@ int main(int argc, char* argv[]) {
 			SDL_Delay(tickTime - diff);
 		}
 	}	
-	game.Clean();
 	return 0;
 }

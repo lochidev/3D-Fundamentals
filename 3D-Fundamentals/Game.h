@@ -8,6 +8,7 @@
 #include "Mat2.h"
 #include <cmath>
 #include "SDL_gamecontroller.h"
+#include "InputManager.h"
 class Game
 {
 public:
@@ -18,7 +19,7 @@ public:
 			if (window) {
 				renderer = SDL_CreateRenderer(window, -1, 0);
 				if (renderer) {
-					isRunning = true;
+					ip.isRunning = true;
 					gController = SDL_GameControllerOpen(0);
 					for (size_t i = 0; i < SDL_NumJoysticks(); i++)
 					{
@@ -26,14 +27,15 @@ public:
 							gController = SDL_GameControllerOpen(i);
 						}
 					}
+					ip.gController = gController;
 				}
 			}
 		}
 		else {
-			isRunning = false;
+			ip.isRunning = false;
 		}
 	}
-	void Clean() {
+	~Game() {
 		if (gController != NULL) {
 			SDL_GameControllerClose(gController);
 		}
@@ -41,59 +43,12 @@ public:
 		SDL_DestroyWindow(window);
 		SDL_Quit();
 	}
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
+	Game(const Game&&) = delete;
+	Game& operator=(const Game&&) = delete;
 	void Stop() {
-		isRunning = false;
-	}
-	void HandleEvents() {
-		SDL_Event event;
-		SDL_PollEvent(&event);
-		switch (event.type) {
-		case SDL_QUIT:
-			isRunning = false;
-		/*case SDL_CONTROLLERAXISMOTION:
-			if (event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				rotateLeft = false;
-				rotateRight = true;
-			}
-			else if (event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
-				rotateLeft = true;
-				rotateRight = false;
-			}
-			break;*/
-		case SDL_CONTROLLERBUTTONDOWN:
-			if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-				rotateLeft = true;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-				rotateRight = true;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-				forward = true;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-				backward = true;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-				angle = 0;
-			}
-			break;
-		case SDL_CONTROLLERBUTTONUP:
-			if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-				rotateLeft = false;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-				rotateRight = false;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-				forward = false;
-			}
-			else if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-				backward = false;
-			}
-			break;
-		default:
-			break;
-		}
+		ip.isRunning = false;
 	}
 	void Update() {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -102,12 +57,15 @@ public:
 		Cube c(3.0f);
 		auto ticks = SDL_GetTicks();
 		auto lines = c.GetLines();
+		if (ip.IsPressed(G_B_PRESSED)) {
+			angle = 0;
+		}
 		for (Vec3<float>& v : lines.vertices) {
-			angle += rotateLeft ? (M_PI / 170) : rotateRight ? -(M_PI / 170) : 0;
+			angle += ip.IsPressed(G_LEFT_PRESSED) ? (M_PI / 170) : ip.IsPressed(G_RIGHT_PRESSED) ? -(M_PI / 170) : 0;
 			Mat2<float>::RotateZ(v, WrapAngle((angle))); // roll first
 			//Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6)))); // then pitch
 			//Mat2<float>::RotateY(v, WrapAngle(((M_PI / 6)))); // then yaw
-			depth += forward ? 0.05f : backward ? -.05f : 0.0f;
+			depth += ip.IsPressed(G_UP_PRESSED) ? 0.05f : ip.IsPressed(G_DOWN_PRESSED) ? -.05f : 0.0f;
 			v += {0.0f, 0.0f, depth};
 			transformer.TransformNDC(v);
 		}
@@ -133,7 +91,7 @@ public:
 public:
 	const int Height;
 	const int Width;
-	bool isRunning = false;
+	InputManager ip;
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -141,9 +99,5 @@ private:
 	SDL_GameController* gController = nullptr;
 	double angle = 0;
 	float depth = 6.0f;
-	bool rotateLeft = false;
-	bool rotateRight = false;
-	bool forward = false;
-	bool backward = false;
 };
 
