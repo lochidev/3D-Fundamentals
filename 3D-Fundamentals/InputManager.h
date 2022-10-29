@@ -90,8 +90,8 @@ public:
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) 
 					|| keystates[SDL_SCANCODE_A]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_LEFT) || keystates[SDL_SCANCODE_LEFT]
-					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTX) > 1000
-					|| -SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTX) > 1000;
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTX) < -1000
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTX) < -1000;
 				  
 			case G_RIGHT_PRESSED:
 				return SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) 
@@ -104,8 +104,8 @@ public:
 			case G_UP_PRESSED:
 				return keystates[SDL_SCANCODE_W] || keystates[SDL_SCANCODE_UP]
 					|| SDL_GameControllerGetButton(gController, SDL_CONTROLLER_BUTTON_DPAD_UP)
-					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) > 1000
-					|| - SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) > 1000;
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_LEFTY) < -1000
+					|| SDL_GameControllerGetAxis(gController, SDL_CONTROLLER_AXIS_RIGHTY) < -1000;
 
 			case G_DOWN_PRESSED:
 				return keystates[SDL_SCANCODE_S] || keystates[SDL_SCANCODE_DOWN]

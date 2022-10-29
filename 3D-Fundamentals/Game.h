@@ -28,12 +28,11 @@ public:
 						}
 					}
 					ip.gController = gController;
+					return;
 				}
 			}
 		}
-		else {
-			ip.isRunning = false;
-		}
+		ip.isRunning = false;
 	}
 	~Game() {
 		if (gController != NULL) {
