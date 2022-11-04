@@ -9,6 +9,7 @@
 #include <cmath>
 #include "SDL_gamecontroller.h"
 #include "InputManager.h"
+#include <utility>
 class Game
 {
 public:
@@ -55,32 +56,120 @@ public:
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 		Cube c(3.0f);
 		auto ticks = SDL_GetTicks();
-		auto lines = c.GetLines();
+		auto lines = c.GetTriangles();
 		if (ip.IsPressed(G_B_PRESSED)) {
 			angle = 0;
 		}
-		for (Vec3<float>& v : lines.vertices) {
-			angle += ip.IsPressed(G_LEFT_PRESSED) ? (M_PI / 170) : ip.IsPressed(G_RIGHT_PRESSED) ? -(M_PI / 170) : 0;
-			Mat2<float>::RotateZ(v, WrapAngle((angle))); // roll first
-			//Mat2<float>::RotateX(v, WrapAngle(((M_PI / 6)))); // then pitch
-			//Mat2<float>::RotateY(v, WrapAngle(((M_PI / 6)))); // then yaw
-			depth += ip.IsPressed(G_UP_PRESSED) ? 0.05f : ip.IsPressed(G_DOWN_PRESSED) ? -.05f : 0.0f;
+		for (Vec3& v : lines.vertices) {
+			angle += ip.IsPressed(G_LEFT_PRESSED) ? (M_PI / 170)
+				: ip.IsPressed(G_RIGHT_PRESSED) ? -(M_PI / 170) : 0;
+			if (ip.IsPressed(G_A_PRESSED))
+				Mat2<float>::RotateZ(v, WrapAngle((angle))); // roll first
+			if (ip.IsPressed(G_X_PRESSED))
+				Mat2<float>::RotateX(v, WrapAngle((angle))); // then pitch
+			if (ip.IsPressed(G_Y_PRESSED))
+				Mat2<float>::RotateY(v, WrapAngle((angle))); // then yaw
+			depth += ip.IsPressed(G_UP_PRESSED) ? 0.05f
+				: ip.IsPressed(G_DOWN_PRESSED) ? -.05f : 0.0f;
 			v += {0.0f, 0.0f, depth};
 			transformer.TransformNDC(v);
 		}
 		for (auto i = lines.indexes.cbegin(),
 			end = lines.indexes.cend();
-			i != end; std::advance(i, 2)) {
-			Vec3<float>& v1 = lines.vertices[*i];
-			Vec3<float>& v2 = lines.vertices[*std::next(i)];
-			SDL_RenderDrawLine(renderer, int(v1.x), int(v1.y), int(v2.x), int(v2.y));
+			i != end; std::advance(i, 3)) {
+			Vec3& v1 = lines.vertices[*i];
+			Vec3& v2 = lines.vertices[*(std::next(i))];
+			Vec3& v3 = lines.vertices[*(std::next(i, 2))];
+			DrawTriangle(v1, v2, v3);
+			//SDL_RenderPresent(renderer);
 		}
-
+		//DrawTriangle({ 0, 500 }, { 300, 300 }, { 1280, 400 });
 
 	}
 	void Render() {
 		SDL_RenderPresent(renderer);
 		//SDL_Delay(10);
+	}
+private:
+	void DrawTriangle(const Vec2& l, const Vec2& r, const Vec2& h) {
+		// find highest in y axis
+		const Vec2* p0 = &h;	//highest
+		const Vec2* p1 = &l; //left
+		const Vec2* p2 = &r; //right
+
+		//sorting by y
+		if (p2->y < p1->y)
+			std::swap(p2, p1);
+		if (p1->y < p0->y) {
+			std::swap(p1, p0);
+			if (p2->y < p1->y)
+				std::swap(p2, p1);
+		}
+		// check if highest (p0) is equal to any other
+		if (p0->y == p1->y) {
+			if (p1->x > p0->x) std::swap(p1, p0);
+			DrawFlatTopTriangle(*p1, *p0, *p2);
+		}
+		else if (p1->y == p2->y) {
+			if (p1->x > p2->x) std::swap(p1, p2);
+			DrawFlatBottomTriangle(*p1, *p2, *p0);
+			//SDL_RenderPresent(renderer);
+
+		}
+		else {
+			// divide
+			const float slope = (p2->x - p0->x) / (p2->y - p0->y);
+			const auto y = p1->y - p0->y;
+			const auto x = y * slope;
+			Vec2 tmp = { x + p0->x, p1->y };
+			const Vec2* p3 = &tmp;
+			if (p1->x > p3->x) std::swap(p1, p3);
+			DrawFlatTopTriangle(*p1, *p3, *p2);
+			//SDL_RenderPresent(renderer);
+
+			DrawFlatBottomTriangle(*p1, *p3, *p0);
+			//SDL_RenderPresent(renderer);
+
+		}
+		//SDL_RenderPresent(renderer);
+	}
+	void DrawFlatTopTriangle(const Vec2& l, const Vec2& r, const Vec2& b)
+	{
+		const float slopel = (b.x - l.x) / (b.y - l.y);
+		const float sloper = (b.x - r.x) / (b.y - r.y);
+		const auto yStart = (int)std::ceil(l.y - 0.5f);
+		const auto yEnd = (int)std::ceil(b.y - 0.5f);
+
+		for (size_t i = yStart; i < yEnd; i++)
+		{
+			const auto y = (i + 0.5f - l.y);
+			const auto lx = slopel * y;
+			const auto xStart = (int)std::ceil(lx + l.x - 0.5f);
+			const auto rx = sloper * y;
+			const auto xEnd = (int)std::ceil(rx + r.x - 0.5f);
+			SDL_RenderDrawLine(renderer, xStart, i, xEnd - 1, i);
+		}
+
+	}
+
+	void DrawFlatBottomTriangle(const Vec2& l, const  Vec2& r, const Vec2& h)
+	{
+		const float slopel = (h.x - l.x) / (h.y - l.y);
+		const float sloper = (h.x - r.x) / (h.y - r.y);
+		const auto yEnd = (int)std::ceil(l.y - 0.5f);
+		const auto yStart = (int)std::ceil(h.y - 0.5f);
+
+		for (size_t i = yStart; i < yEnd; i++)
+		{
+			const auto y = (i + 0.5f - h.y);
+			const auto lx = slopel * y;
+			const auto xStart = (int)std::ceil(lx + h.x - 0.5f);
+			const auto rx = sloper * y;
+			const auto xEnd = (int)std::ceil(rx + h.x - 0.5f);
+			SDL_RenderDrawLine(renderer, xStart, i, xEnd - 1, i);
+			//SDL_RenderPresent(renderer);
+		}
+
 	}
 	template <typename T>
 	T WrapAngle(T angle) {

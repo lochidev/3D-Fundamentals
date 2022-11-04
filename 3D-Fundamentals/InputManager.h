@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_gamecontroller.h"
+#include "LoggingTimer.h"
 
 #define G_LEFT_PRESSED 0
 #define G_RIGHT_PRESSED 1
@@ -15,6 +16,7 @@ class InputManager {
 public:
 	InputManager() = default;
 	void HandleEvents() {
+		//LoggingTimer timer;
 		SDL_Event event;
 		SDL_PollEvent(&event);
 		switch (event.type) {
