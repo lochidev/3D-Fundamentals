@@ -53,7 +53,7 @@ public:
 		SDL_Log("Value: #%d", i);*/
 
 	}
-	bool IsPressed(unsigned int t) {
+	bool IsPressed(unsigned int t) const {
 		const Uint8* keystates = SDL_GetKeyboardState(NULL);
 		if (gController == NULL) {
 			switch (t) {

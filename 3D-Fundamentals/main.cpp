@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
 
 	}
 	const auto tickTime = current.refresh_rate == 0 ? 1000 / 60 : 1000 / current.refresh_rate;
-	while (game.ip.isRunning) {
+	game.Setup();
+	while (game.IsRunning()) {
 		const auto begin = SDL_GetTicks();
-		game.ip.HandleEvents();
 		game.Update();
 		game.Render();
 		const auto end = SDL_GetTicks();
