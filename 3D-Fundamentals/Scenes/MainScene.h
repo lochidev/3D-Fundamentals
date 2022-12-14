@@ -4,7 +4,6 @@
 class MainScene : public Scene<float>
 {
 public:
-	MainScene() = delete;
 	MainScene(SDL_Renderer* r,
 		const NDCTransformer<float>& t, const InputManager& ip) : Scene<float>(r, t, ip)
 	{}

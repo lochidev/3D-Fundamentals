@@ -6,7 +6,6 @@
 template <typename T>
 class Scene {
 public:
-	Scene() = delete;
 	Scene(SDL_Renderer* r,
 		const NDCTransformer<T>& t,
 		const InputManager& ip) : renderer(r), transformer(t), inputManager(ip)
