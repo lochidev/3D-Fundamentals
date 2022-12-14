@@ -17,3 +17,7 @@ Step 3 - 3D rotation
 Step 4 - Perspective projection
 
 ![Perspective projection](https://i.imgur.com/Pd84huy.png)
+
+Step 5 - Triangle Rasterization! + Cube == Occlusion
+
+![Triangle Rasterization! + Cube == Occlusion](https://i.imgur.com/SBoawkt.gif)
