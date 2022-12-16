@@ -30,6 +30,8 @@ public:
 						}
 					}
 					ip.gController = gController;
+					zBuff = std::make_unique<ZBuffer>(y, x);
+					graphics = std::make_unique<Graphics>(renderer, zBuff);
 					return;
 				}
 			}
@@ -49,7 +51,7 @@ public:
 	Game(const Game&&) = delete;
 	Game& operator=(const Game&&) = delete;
 	void Setup() {
-		scenes.push_back(std::make_unique<MainScene>(renderer, transformer, ip));
+		scenes.push_back(std::make_unique<MainScene>(renderer, transformer, ip, graphics));
 		currentScene = scenes.begin();
 	}
 	void Update() {
@@ -77,5 +79,7 @@ private:
 	std::vector<std::unique_ptr<Scene<float>>> scenes;
 	std::vector<std::unique_ptr<Scene<float>>>::iterator currentScene;
 	InputManager ip;
+	std::shared_ptr<Graphics> graphics;
+	std::shared_ptr<ZBuffer> zBuff;
 };
 

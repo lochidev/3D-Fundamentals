@@ -5,7 +5,9 @@ class MainScene : public Scene<float>
 {
 public:
 	MainScene(SDL_Renderer* r,
-		const NDCTransformer<float>& t, const InputManager& ip) : Scene<float>(r, t, ip)
+		const NDCTransformer<float>& t, const InputManager& ip, std::shared_ptr<Graphics> graphics)
+		: 
+		Scene<float>(r, t, ip, graphics)
 	{}
 	void Update() override {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -37,7 +39,7 @@ public:
 			Vec3& v1 = lines.vertices[*i];
 			Vec3& v2 = lines.vertices[*(std::next(i))];
 			Vec3& v3 = lines.vertices[*(std::next(i, 2))];
-			Graphics::DrawTriangle(v1, v2, v3, renderer);
+			graphics->DrawTriangle(v1, v2, v3);
 			//SDL_RenderPresent(renderer);
 		}
 		//DrawTriangle({ 0, 500 }, { 300, 300 }, { 1280, 400 });
