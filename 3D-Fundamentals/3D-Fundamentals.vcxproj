@@ -157,6 +157,7 @@
     <ClInclude Include="Scenes\LUTScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\MainScene.h" />
+    <ClInclude Include="ZBuffer.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UI\Button.h" />
     <ClInclude Include="Vec2.h" />

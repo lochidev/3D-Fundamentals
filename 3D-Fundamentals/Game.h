@@ -56,7 +56,7 @@ public:
 	Game(const Game&&) = delete;
 	Game& operator=(const Game&&) = delete;
 	void Setup() {
-		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip, Width, Height));
+		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip));
 		currentScene = scenes.begin();
 	}
 	void Update() {
@@ -84,5 +84,7 @@ private:
 	std::vector<std::unique_ptr<Scene<float>>> scenes;
 	std::vector<std::unique_ptr<Scene<float>>>::iterator currentScene;
 	InputManager ip;
+	std::shared_ptr<Graphics> graphics;
+	std::shared_ptr<ZBuffer> zBuff;
 };
 
