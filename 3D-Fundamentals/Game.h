@@ -57,7 +57,7 @@ public:
 	Game& operator=(const Game&&) = delete;
 	void Setup() {
 		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip, Width, Height));
-		currentScene = scenes.begin()
+		currentScene = scenes.begin();
 	}
 	void Update() {
 		ip.HandleEvents();
