@@ -1,7 +1,8 @@
 #pragma once
 #include "SDL.h"
-#include "InputManager.h"
-#include "NDCTransformer.h"
+#include "../InputManager.h"
+#include "../NDCTransformer.h"
+#include "../UI/Button.h"
 #include "Graphics.h"
 template <typename T>
 class Scene {
