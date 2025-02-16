@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "Vec2.h"
 #include "Vec3.h"
 #include "NDCTransformer.h"
@@ -31,6 +32,10 @@ public:
 						}
 					}
 					ip.gController = gController;
+					if (TTF_Init() == -1) {
+						SDL_Log("SDL_ttf initialization failed: %s", TTF_GetError());
+						return;
+					}
 					return;
 				}
 			}
@@ -41,6 +46,7 @@ public:
 		if (gController != NULL) {
 			SDL_GameControllerClose(gController);
 		}
+		TTF_Quit();
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
@@ -50,7 +56,7 @@ public:
 	Game(const Game&&) = delete;
 	Game& operator=(const Game&&) = delete;
 	void Setup() {
-		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip));
+		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip, Width, Height));
 		currentScene = scenes.begin();
 	}
 	void Update() {

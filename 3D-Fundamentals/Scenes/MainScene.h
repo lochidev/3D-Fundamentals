@@ -5,7 +5,8 @@ class MainScene : public Scene<float>
 {
 public:
 	MainScene(SDL_Renderer* r,
-		const NDCTransformer<float>& t, const InputManager& ip) : Scene<float>(r, t, ip)
+		const NDCTransformer<float>& t, const InputManager& ip, const int x,
+		const int y) : Scene<float>(r, t, ip, x, y)
 	{}
 	void Update() override {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

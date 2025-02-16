@@ -5,46 +5,42 @@ class LUTScene : public Scene<float>
 {
 public:
 	LUTScene(SDL_Renderer* r,
-		const NDCTransformer<float>& t, const InputManager& ip) : Scene<float>(r, t, ip)
+        const NDCTransformer<float>& t, const InputManager& ip, const int x,
+        const int y) : Scene<float>(r, t, ip, x, y)
 	{
 	}
-	void Update() override {
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		SDL_RenderClear(renderer);
-		Button b(100, 100, 100, 100, { 0, 0, 255 });
-		b.Draw(renderer);
-		if (b.IsClicked(100, 100, SDL_GetMouseState(NULL, NULL)))
-		{
-			SDL_Log("Button Clicked!");
-		}
-		//SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // set to blue
-		////draw a button with SDL and detect when clicked. 
-		//int x, y;
-		//Uint32 buttons = SDL_GetMouseState(&x, &y);
+    void Update() override {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
 
-		//if (buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-		//	if (xC != 0 && yC != 0)
-		//		SDL_RenderDrawLine(renderer, xC, yC, x, y);
-		//	else
-		//	{
-		//		SDL_RenderDrawPoint(renderer, x, y);
-		//	}
-		//	xC = x;
-		//	yC = y;
-		//}
+        // Assuming you have a TTF_Font* font initialized elsewhere
+        TTF_Font* font = TTF_OpenFont("Assets/short-baby.ttf", 24);
+        if (!font) {
+            SDL_Log("Failed to load font: %s", TTF_GetError());
+            return;
+        }
 
-		//if (buttons & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-		//	if (xC != 0 && yC != 0)
-		//		SDL_RenderDrawLine(renderer, xC, yC, x, y);
-		//	else
-		//	{
-		//		SDL_RenderDrawPoint(renderer, x, y);
-		//		
-		//	}
-		//	xC = x;
-		//	yC = y;
-		//}
-	}
+        // Create a Button with text and font
+        SDL_Color buttonColor = { 0, 0, 255, 255 };  // Blue color
+        SDL_Color textColor = { 255, 255, 0, 255 }; // Yellow text
+
+        Button b(100, 100, 200, 50, buttonColor, "Execute!", textColor, font);
+
+        // Draw the button
+        b.Draw(renderer);
+
+        // Get mouse state
+        int mouseX, mouseY;
+        Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+
+        // Check if the button is clicked
+        if (b.IsClicked(mouseX, mouseY, mouseState)) {
+            SDL_Log("Button Clicked!");
+        }
+
+        // Clean up the font after using it
+        TTF_CloseFont(font);
+    }
 	void Render() override {
 		SDL_RenderPresent(renderer);
 		//SDL_Delay(10);
