@@ -38,7 +38,7 @@ public:
 			Vec3& v1 = lines.vertices[*i];
 			Vec3& v2 = lines.vertices[*(std::next(i))];
 			Vec3& v3 = lines.vertices[*(std::next(i, 2))];
-			graphics->DrawTriangle(v1, v2, v3);
+			Graphics::DrawTriangle(v1, v2, v3, renderer);
 			//SDL_RenderPresent(renderer);
 		}
 		//DrawTriangle({ 0, 500 }, { 300, 300 }, { 1280, 400 });
