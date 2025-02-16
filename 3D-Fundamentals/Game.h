@@ -11,6 +11,7 @@
 #include "InputManager.h"
 #include <utility>
 #include "Scenes/MainScene.h"
+#include "Scenes/LUTScene.h"
 class Game
 {
 public:
@@ -49,7 +50,7 @@ public:
 	Game(const Game&&) = delete;
 	Game& operator=(const Game&&) = delete;
 	void Setup() {
-		scenes.push_back(std::make_unique<MainScene>(renderer, transformer, ip));
+		scenes.push_back(std::make_unique<LUTScene>(renderer, transformer, ip));
 		currentScene = scenes.begin();
 	}
 	void Update() {
@@ -70,8 +71,8 @@ public:
 	const int Height;
 	const int Width;
 private:
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	SDL_Window* window = nullptr;
+	SDL_Renderer* renderer = nullptr;
 	NDCTransformer<float> transformer;
 	SDL_GameController* gController = nullptr;
 	std::vector<std::unique_ptr<Scene<float>>> scenes;
