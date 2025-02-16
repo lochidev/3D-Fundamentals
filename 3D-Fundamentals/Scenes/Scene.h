@@ -21,5 +21,6 @@ protected:
 	SDL_Renderer* renderer;
 	const NDCTransformer<T>& transformer;
 	const InputManager& inputManager;
-
+	const int windowX;
+	const int windowY;
 };
