@@ -23,11 +23,15 @@ public:
         // Create a Button with text and font
         SDL_Color buttonColor = { 0, 0, 255, 255 };  // Blue color
         SDL_Color textColor = { 255, 255, 0, 255 }; // Yellow text
-
-        Button b(100, 100, 200, 50, buttonColor, "Execute!", textColor, font);
+        const int buttonY = (windowY / 12) * 11;
+        Button b(150, buttonY, 200, 50, buttonColor, "Execute!", textColor, font);
 
         // Draw the button
         b.Draw(renderer);
+        //draw horizontal border
+        SDL_RenderDrawLine(renderer, (windowX / 10) * 6, 0, (windowX / 10) * 6, buttonY - 75);
+        //draw horizontal line
+        SDL_RenderDrawLine(renderer, 0, buttonY - 75, (windowX), buttonY - 75);
 
         // Get mouse state
         int mouseX, mouseY;
