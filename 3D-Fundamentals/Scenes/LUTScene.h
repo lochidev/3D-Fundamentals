@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-
+#include "../Logic.h"
 class LUTScene : public Scene<float>
 {
 public:
@@ -12,9 +12,9 @@ public:
     void Update() override {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-
+        SDL_Color yellow = { 255, 255, 0, 255 };
         // Assuming you have a TTF_Font* font initialized elsewhere
-        TTF_Font* font = TTF_OpenFont("Assets/short-baby.ttf", 24);
+        TTF_Font* font = TTF_OpenFont("Assets/fonts/short-baby.ttf", 24);
         if (!font) {
             SDL_Log("Failed to load font: %s", TTF_GetError());
             return;
@@ -28,6 +28,14 @@ public:
 
         // Draw the button
         b.Draw(renderer);
+        AND andGate(renderer, 400, buttonY, 200, 50, yellow);
+        andGate.Draw();
+        OR orGate(renderer, 650, buttonY, 200, 50, yellow);
+        orGate.Draw();
+        XOR xorGate(renderer, 900, buttonY, 200, 50, yellow);
+        xorGate.Draw();
+        NOT notGate(renderer, 1150, buttonY, 200, 50, yellow);
+        notGate.Draw();
         //draw horizontal border
         SDL_RenderDrawLine(renderer, (windowX / 10) * 6, 0, (windowX / 10) * 6, buttonY - 75);
         //draw horizontal line

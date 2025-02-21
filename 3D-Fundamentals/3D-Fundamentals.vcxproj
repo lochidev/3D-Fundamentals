@@ -112,14 +112,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)libs\sdl\include;$(SolutionDir)libs\sdl-ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\sdl-img\include;$(SolutionDir);$(SolutionDir)libs\sdl\include;$(SolutionDir)libs\sdl-ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libs\sdl-ttf\lib\x64;..\libs\sdl\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\sdl-img\lib\x64;..\libs\sdl-ttf\lib\x64;..\libs\sdl\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,6 +151,7 @@
     <ClInclude Include="LoggingTimer.h" />
     <ClInclude Include="IndexedList.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Logic.h" />
     <ClInclude Include="Mat2.h" />
     <ClInclude Include="NDCTransformer.h" />
     <ClInclude Include="Scenes\Graphics.h" />
@@ -169,12 +170,26 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Assets\short-baby.ttf">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </Font>
+    <CopyFileToFolders Include="..\libs\sdl-ttf\lib\x64\SDL2_ttf.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="..\libs\sdl-ttf\lib\x64\SDL2_ttf.dll">
+    <Text Include="Assets\info.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\fonts\short-baby.ttf">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\logic-sprites\AND.png" />
+    <CopyFileToFolders Include="Assets\logic-sprites\NOT.png" />
+    <CopyFileToFolders Include="Assets\logic-sprites\OR.png" />
+    <CopyFileToFolders Include="Assets\logic-sprites\XOR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\libs\sdl-img\lib\x64\SDL2_image.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>

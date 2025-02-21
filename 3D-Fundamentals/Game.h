@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_image.h"
 #include "Vec2.h"
 #include "Vec3.h"
 #include "NDCTransformer.h"
@@ -34,6 +35,10 @@ public:
 					ip.gController = gController;
 					if (TTF_Init() == -1) {
 						SDL_Log("SDL_ttf initialization failed: %s", TTF_GetError());
+						return;
+					}
+					if (!IMG_Init(IMG_INIT_PNG)) {
+						SDL_Log("Failed to initialize SDL_image: ", IMG_GetError());
 						return;
 					}
 					return;
