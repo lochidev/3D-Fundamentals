@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
 	game.Setup();
 	while (game.IsRunning()) {
 		const auto begin = SDL_GetTicks();
+		game.HandleEvents();
 		game.Update();
 		game.Render();
 		const auto end = SDL_GetTicks();

@@ -48,6 +48,9 @@ public:
 		SDL_RenderPresent(renderer);
 		//SDL_Delay(10);
 	}
+	void HandleEvents() override{
+		return;
+	}
 private:
 	/*SDL_Renderer* renderer;
 	const NDCTransformer<float>& transformer;

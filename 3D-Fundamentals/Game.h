@@ -65,11 +65,14 @@ public:
 		currentScene = scenes.begin();
 	}
 	void Update() {
-		ip.HandleEvents();
 		(*currentScene)->Update();
 	}
 	void Render() {
 		(*currentScene)->Render();
+	}
+	void HandleEvents() {
+		ip.HandleEvents();
+		(*currentScene)->HandleEvents();
 	}
 	void Stop() {
 		ip.isRunning = false;
