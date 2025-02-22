@@ -115,7 +115,7 @@ public:
 		// Check if the user clicks to place the selected gate
 		if (selectedGate && mouseState & SDL_BUTTON(SDL_BUTTON_LEFT)) {
 			// Restrict placement to the top-left area and ensure the gate is within the screen bounds
-			if (mouseX <= (windowX / 10) * 6 && mouseY <= (windowY / 12) * 11) {
+			if (mouseX <= (windowX / 10) * 6 && mouseY <= (windowY / 12) * 10) {
 				int placedX = mouseX - selectedGate->GetWidth() / 2;
 				int placedY = mouseY - selectedGate->GetHeight() / 2;
 
